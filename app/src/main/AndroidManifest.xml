@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="costas.firebasedb">
 
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +23,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".PKIActivity"></activity>
+        <activity android:name=".NFCActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/costas.firebasedb.beam" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -85,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button gotoNFC = (Button) findViewById(R.id.gotoNFC);
+        gotoNFC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNFCActivity();
+            }
+        });
+
 
 
         listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -229,4 +237,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PKIActivity.class);
         startActivity(intent);
     }
+
+    public void openNFCActivity() {
+        Intent intent = new Intent(this, NFCActivity.class);
+        startActivity(intent);
+    }
+
 }
