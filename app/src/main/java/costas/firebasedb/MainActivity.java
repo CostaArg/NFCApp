@@ -1,5 +1,6 @@
 package costas.firebasedb;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
                 addUser();
             }
         });
+
+        Button gotoPKI = (Button) findViewById(R.id.gotoPKI);
+        gotoPKI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPKIActivity();
+            }
+        });
     }
 
     @Override
@@ -100,5 +109,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Please enter name", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void openPKIActivity() {
+        Intent intent = new Intent(this, PKIActivity.class);
+        startActivity(intent);
     }
 }
