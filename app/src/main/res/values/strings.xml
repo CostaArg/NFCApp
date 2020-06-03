@@ -2,9 +2,9 @@
     <string name="app_name">Identification App</string>
     
     <array name="ranks">
-        <item>Student</item>
-        <item>Teacher</item>
-        <item>Cleaner</item>
+        <item>Normal Rank</item>
+        <item>Higher Rank</item>
+        <item>Highest Rank</item>
     </array>
 
     <string name="currentPki">Current key is:</string>

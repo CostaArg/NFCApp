@@ -52,8 +52,6 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-//        Time time = new Time();
-//        time.setToNow();
         String pkiKey = getData();
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMimeRecord(
@@ -83,7 +81,7 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
             switch (msg.what) {
                 case MESSAGE_SENT:
                     String pkiKey = msg.toString();
-                    Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Key sent!", Toast.LENGTH_LONG).show();
                     handlePki(pkiKey);
 
                     break;
@@ -135,7 +133,6 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
                 Toast.makeText(getApplicationContext(), "Failed encoding NDEF", Toast.LENGTH_LONG).show();
             }
         }
-        // ?? toast ??
     }
 
 

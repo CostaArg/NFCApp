@@ -62,8 +62,6 @@ public class PKIActivity extends AppCompatActivity {
 
                 saveInfo();
 
-                //pki = pkiInput.getText().toString();
-
                 String pkiKey = getData();
                 String message = getString(R.string.currentPki);
                 message += pkiKey;
@@ -88,7 +86,7 @@ public class PKIActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(pkiKey)) {
                     authUser(pkiKey);
                 } else {
-                    Toast.makeText(PKIActivity.this, "You haven't entered a Public Key", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PKIActivity.this, "You haven't entered a key", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -115,7 +113,7 @@ public class PKIActivity extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 boolean userFound = false;
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    String pkiDb = String.valueOf(userSnapshot.child("userName").getValue());
+                    String pkiDb = String.valueOf(userSnapshot.child("userId").getValue());
                     if (pkiDb.compareTo(pkiKey) == 0) {
                         userFound = true;
                         break;
@@ -123,16 +121,15 @@ public class PKIActivity extends AppCompatActivity {
                 }
 
                 if (userFound) {
-                    Toast.makeText(c, "User found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(c, "Key found", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(c, "User not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(c, "Key not found", Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onStart() {
-                //whatever you need to do onStart
                 return;
             }
 

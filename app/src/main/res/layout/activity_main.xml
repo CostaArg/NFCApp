@@ -53,7 +53,7 @@
         android:layout_marginBottom="60dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:text="GO TO PKI" />
+        android:text="GO TO KEY" />
 
     <Button
         android:id="@+id/gotoNFC"
