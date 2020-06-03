@@ -33,4 +33,9 @@
         android:text="Add User"
         tools:layout_editor_absoluteX="102dp"
         tools:layout_editor_absoluteY="302dp" />
+
+    <ListView
+        android:id="@+id/listViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
