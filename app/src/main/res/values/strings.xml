@@ -11,10 +11,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="info">Ensure that Android Beam is enabled by turning it on in
-        the system Settings (select the setting icon above), then place this device up
-        against another Android device that supports Android Beam to send a
-        message.</string>
+    <string name="info">Make sure that Android Beam is enabled in the settings, then place your device up
+        against another Android device that supports Android Beam to send your public key</string>
     <string name="menu_settings">Android Beam settings</string>
     <string name="title_activity_nfc_send">Nfc_Send</string>
     <string name="title_activity_nfc_receive">Nfc_Receive</string>

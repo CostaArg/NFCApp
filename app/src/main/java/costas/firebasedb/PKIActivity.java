@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class PKIActivity extends AppCompatActivity {
 
-    String pki;
+    String pkiKey;
 
     EditText pkiInput;
 
@@ -29,8 +29,6 @@ public class PKIActivity extends AppCompatActivity {
 
     DatabaseReference databaseUsers;
 
-    TextView pkiText;
-
     public void saveInfo(){
 
         SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
@@ -38,6 +36,12 @@ public class PKIActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("pkiInput", pkiInput.getText().toString());
         editor.apply();
+
+    }
+
+    public String getData(){
+        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+        return sharedPref.getString("pkiInput", "");
 
     }
 
@@ -58,24 +62,31 @@ public class PKIActivity extends AppCompatActivity {
 
                 saveInfo();
 
-                pki = pkiInput.getText().toString();
+                //pki = pkiInput.getText().toString();
 
-                showPkiToast(pki);
-
+                String pkiKey = getData();
                 String message = getString(R.string.currentPki);
-                message += pki;
+                message += pkiKey;
+                TextView pkitextView = (TextView) findViewById(R.id.pkiDisplay);
+                pkitextView.setText(message);
 
-                TextView textView = (TextView) findViewById(R.id.pkiDisplay);
-                textView.setText(message);
+                showPkiToast(pkiKey);
             }
         });
+
+        String pkiKey = getData();
+        String message = getString(R.string.currentPki);
+        message += pkiKey;
+        TextView pkitextView = (TextView) findViewById(R.id.pkiDisplay);
+        pkitextView.setText(message);
 
         pkiAuthenticate = (Button) findViewById(R.id.pkiAuthenticate);
         pkiAuthenticate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(pki)) {
-                    authUser(pki);
+                String pkiKey = getData();
+                if (!TextUtils.isEmpty(pkiKey)) {
+                    authUser(pkiKey);
                 } else {
                     Toast.makeText(PKIActivity.this, "You haven't entered a Public Key", Toast.LENGTH_LONG).show();
                 }
@@ -84,11 +95,11 @@ public class PKIActivity extends AppCompatActivity {
 
     }
 
-    private void showPkiToast(String pki) {
-        Toast.makeText(PKIActivity.this, pki, Toast.LENGTH_SHORT).show();
+    private void showPkiToast(String pkiKey) {
+        Toast.makeText(PKIActivity.this, pkiKey, Toast.LENGTH_SHORT).show();
     }
 
-    private void authUser(final String pki) {
+    private void authUser(final String pkiKey) {
 
         final Context c = this;
 
@@ -103,7 +114,7 @@ public class PKIActivity extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String pkiDb = String.valueOf(userSnapshot.child("userName").getValue());
 
-                    if (pkiDb.compareTo(pki) == 0) {
+                    if (pkiDb.compareTo(pkiKey) == 0) {
                         userFound = "yes";
                     }
 
