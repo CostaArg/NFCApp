@@ -2,6 +2,7 @@ package costas.firebasedb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
@@ -36,13 +37,22 @@ public class MainActivity extends AppCompatActivity {
     Button buttonAdd;
     Spinner spinnerRanks;
 
-
     DatabaseReference databaseUsers;
 
     ListView listViewUsers;
-
+    WifiListener mReceiver;
     List<User> userList;
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mReceiver);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mReceiver, new IntentFilter(
+                ConnectivityManager.CONNECTIVITY_ACTION));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,22 +67,29 @@ public class MainActivity extends AppCompatActivity {
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
         userList = new ArrayList<>();
-
-        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        // just for the first time
+        final ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        final Snackbar wifiSnack = Snackbar
+                .make(layout, "Your wifi is off", Snackbar.LENGTH_INDEFINITE);
 
         if (!isConnected) {
-            Snackbar snackbar = Snackbar
-                    .make(layout, "Your wifi is off", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Try again", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-            });
-            snackbar.show();
+            wifiSnack.show();
         }
+
+        mReceiver = new WifiListener () {
+            @Override
+            protected void onNetworkChange() {
+                ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                if (!isConnected)
+                    wifiSnack.show();
+                else
+                    wifiSnack.dismiss();
+            }
+        };
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

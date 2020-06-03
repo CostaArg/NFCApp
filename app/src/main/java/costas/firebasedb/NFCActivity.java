@@ -1,6 +1,8 @@
 package costas.firebasedb;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -17,6 +19,7 @@ import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +35,6 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
-
         mInfoText = (TextView) findViewById(R.id.textView);
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -52,8 +54,8 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
     public NdefMessage createNdefMessage(NfcEvent event) {
         Time time = new Time();
         time.setToNow();
-
-        String text = ("Beam me up!\n\n" + time.format("%H:%M:%S"));
+        String pkiKey = getData();
+        String text = (pkiKey + time.format("%H:%M:%S"));
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMimeRecord(
                         "application/costas.firebasedb.beam", text.getBytes())
@@ -61,6 +63,11 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
         return msg;
     }
 
+    public String getData(){
+        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+        return sharedPref.getString("pkiInput", "");
+
+    }
     //Implementation for OnNdefPushCompleteCallback interface
 
     @Override

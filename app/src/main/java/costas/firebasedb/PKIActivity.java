@@ -31,21 +31,13 @@ public class PKIActivity extends AppCompatActivity {
 
     TextView pkiText;
 
-    public void saveInfo(View view){
+    public void saveInfo(){
 
         SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("pkiInput", pkiInput.getText().toString());
         editor.apply();
-
-    }
-
-    public void showData(View view){
-        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
-
-        String pkiKey = sharedPref.getString("pkiInput", "");
-        pkiText.setText(pkiKey);
 
     }
 
@@ -64,7 +56,7 @@ public class PKIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                saveInfo(pkiInput);
+                saveInfo();
 
                 pki = pkiInput.getText().toString();
 
