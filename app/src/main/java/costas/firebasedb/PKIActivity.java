@@ -3,6 +3,7 @@ package costas.firebasedb;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,7 @@ public class PKIActivity extends AppCompatActivity {
             public void onClick(View v) {
                 pki = pkiInput.getText().toString();
 
-                showToast(pki);
+                showPkiToast(pki);
 
                 String message = getString(R.string.currentPki);
                 message += pki;
@@ -56,18 +57,26 @@ public class PKIActivity extends AppCompatActivity {
         pkiAuthenticate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                authUser(pki);
+                if (!TextUtils.isEmpty(pki)) {
+                    authUser(pki);
+                } else {
+                    Toast.makeText(PKIActivity.this, "You haven't entered a Public Key", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
     }
 
-    private void showToast(String pki) {
+    private void showPkiToast(String pki) {
         Toast.makeText(PKIActivity.this, pki, Toast.LENGTH_SHORT).show();
     }
 
     private void authUser(final String pki) {
+
         final Context c = this;
+
+        final String userFound;
+
         databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
