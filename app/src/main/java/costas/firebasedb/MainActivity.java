@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,12 +12,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,14 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     List<User> userList;
 
-    ConnectivityManager cm =
-            (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-
-    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-    boolean isConnected = activeNetwork != null &&
-            activeNetwork.isConnectedOrConnecting();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +53,22 @@ public class MainActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonAdd = (Button) findViewById(R.id.buttonAddUser);
         spinnerRanks = (Spinner) findViewById(R.id.spinnerRanks);
-
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_main);
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
         userList = new ArrayList<>();
+
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if (!isConnected) {
+            Snackbar snackbar = Snackbar
+                    .make(layout, "Your wifi is off", Snackbar.LENGTH_INDEFINITE);
+
+            snackbar.show();
+        }
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(name)) {
                     updateUser(userId, name, rank);
                     b.dismiss();
+                } else {
+                    if (!TextUtils.isEmpty(rank)) {
+                        updateRank(userId, rank);
+                        b.dismiss();
+                    }
                 }
             }
         });
@@ -157,18 +169,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean updateUser(String id, String name, String rank) {
-        //getting the specified access reference
+        //getting the specified user reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
-        //updating access
+        //updating user
         User user = new User(id, name, rank);
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
         return true;
     }
 
+    private boolean updateRank(String id, String rank) {
+        //getting the specified rank reference
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Users").child(id).child("userRank");
+
+        //updating rank
+        dR.setValue(rank);
+        Toast.makeText(getApplicationContext(), "Rank Updated", Toast.LENGTH_LONG).show();
+        return true;
+    }
+
     private boolean deleteUser(String id) {
-        //getting the specified access reference
+        //getting the specified user reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
         //removing user
@@ -190,13 +212,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(name)){
 
-          String id =  databaseUsers.push().getKey();
+            String id =  databaseUsers.push().getKey();
 
-          User user = new User(id, name, rank);
+            User user = new User(id, name, rank);
 
-          databaseUsers.child(id).setValue(user);
+            databaseUsers.child(id).setValue(user);
 
-          Toast.makeText(this, "Users added", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "User added", Toast.LENGTH_LONG).show();
 
         }else{
             Toast.makeText(this, "Please enter name", Toast.LENGTH_LONG).show();

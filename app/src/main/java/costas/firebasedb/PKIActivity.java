@@ -75,21 +75,29 @@ public class PKIActivity extends AppCompatActivity {
 
         final Context c = this;
 
-        final String userFound;
-
         databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String userFound;
+
+                userFound = "reset";
+
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String pkiDb = String.valueOf(userSnapshot.child("userName").getValue());
 
                     if (pkiDb.compareTo(pki) == 0) {
-                        Toast.makeText(c, "User found", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(c, "User not found", Toast.LENGTH_LONG).show();
+                        userFound = "yes";
                     }
 
                 }
+
+                if (userFound.equals("yes")) {
+                    Toast.makeText(c, "User found", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(c, "User not found", Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
