@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PKIActivity extends AppCompatActivity {
@@ -29,8 +30,15 @@ public class PKIActivity extends AppCompatActivity {
                 pki = pkiInput.getText().toString();
 
                 showToast(pki);
+
+                String message = getString(R.string.currentPki);
+                message += pki;
+
+                TextView textView = (TextView) findViewById(R.id.pkiDisplay);
+                textView.setText(message);
             }
         });
+
     }
 
     private void showToast(String text) {

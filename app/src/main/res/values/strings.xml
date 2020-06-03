@@ -6,4 +6,6 @@
         <item>Professor</item>
         <item>Cleaner</item>
     </array>
+
+    <string name="currentPki">Current public key is:</string>
 </resources>
