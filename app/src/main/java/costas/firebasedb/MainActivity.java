@@ -1,6 +1,9 @@
 package costas.firebasedb;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
     List<User> userList;
 
+    ConnectivityManager cm =
+            (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+    boolean isConnected = activeNetwork != null &&
+            activeNetwork.isConnectedOrConnecting();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+
+        listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 User user = userList.get(i);
                 showUpdateDeleteDialog(user.getUserId(), user.getUserName());
-                return true;
             }
         });
     }
