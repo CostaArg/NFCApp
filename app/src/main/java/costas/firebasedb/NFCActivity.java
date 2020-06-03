@@ -52,15 +52,14 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
     public NdefMessage createNdefMessage(NfcEvent event) {
         Time time = new Time();
         time.setToNow();
-        String text = ("Beam me up!\n\n" +
-                "Beam Time: " + time.format("%H:%M:%S"));
+
+        String text = ("Beam me up!\n\n" + time.format("%H:%M:%S"));
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMimeRecord(
                         "application/costas.firebasedb.beam", text.getBytes())
                 });
         return msg;
     }
-
 
     //Implementation for OnNdefPushCompleteCallback interface
 

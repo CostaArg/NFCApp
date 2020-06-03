@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonAdd = (Button) findViewById(R.id.buttonAddUser);
         spinnerRanks = (Spinner) findViewById(R.id.spinnerRanks);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_main);
+        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_main);
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
 
         userList = new ArrayList<>();
@@ -65,8 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (!isConnected) {
             Snackbar snackbar = Snackbar
-                    .make(layout, "Your wifi is off", Snackbar.LENGTH_INDEFINITE);
-
+                    .make(layout, "Your wifi is off", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Try again", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+            });
             snackbar.show();
         }
 

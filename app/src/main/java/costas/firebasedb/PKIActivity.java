@@ -1,6 +1,7 @@
 package costas.firebasedb;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -28,6 +29,26 @@ public class PKIActivity extends AppCompatActivity {
 
     DatabaseReference databaseUsers;
 
+    TextView pkiText;
+
+    public void saveInfo(View view){
+
+        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("pkiInput", pkiInput.getText().toString());
+        editor.apply();
+
+    }
+
+    public void showData(View view){
+        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+
+        String pkiKey = sharedPref.getString("pkiInput", "");
+        pkiText.setText(pkiKey);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +59,13 @@ public class PKIActivity extends AppCompatActivity {
         pkiInput = (EditText) findViewById(R.id.pkiInput);
 
         pkiSubmit = (Button) findViewById(R.id.pkiSubmit);
+
         pkiSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                saveInfo(pkiInput);
+
                 pki = pkiInput.getText().toString();
 
                 showPkiToast(pki);
