@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">firebasedb</string>
-    
+
     <array name="ranks">
         <item>Student</item>
-        <item>Teacher</item>
+        <item>Professor</item>
         <item>Cleaner</item>
     </array>
 </resources>

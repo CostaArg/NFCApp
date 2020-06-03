@@ -1,30 +1,28 @@
 package costas.firebasedb;
 
-public class User {
+import com.google.firebase.database.IgnoreExtraProperties;
 
-    String userId;
-    String userName;
-    String userRank;
+@IgnoreExtraProperties
+public class User {
+    private String id;
+    private String userName;
+    private int rating;
 
     public User() {
 
     }
 
-    public User(String userId, String userName, String userRank) {
-        this.userId = userId;
+    public User(String id, String userName, int rating) {
         this.userName = userName;
-        this.userRank = userRank;
-    }
-
-    public String getUserId() {
-        return userId;
+        this.rating = rating;
+        this.id = id;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getUserRank() {
-        return userRank;
+    public int getRating() {
+        return rating;
     }
 }

@@ -1,8 +1,6 @@
 package costas.firebasedb;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class UserList extends ArrayAdapter<User> {
+public class AccessList extends ArrayAdapter<Access> {
     private Activity context;
-    List<User> users;
+    List<Access> accesses;
 
-    public UserList(Activity context, List<User> users) {
-        super(context, R.layout.layout_access_list, users);
+    public AccessList(Activity context, List<Access> accesses) {
+        super(context, R.layout.layout_access_list, accesses);
         this.context = context;
-        this.users = users;
+        this.accesses = accesses;
     }
 
 
@@ -28,11 +26,11 @@ public class UserList extends ArrayAdapter<User> {
         View listViewItem = inflater.inflate(R.layout.layout_access_list, null, true);
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
-        TextView textViewRating = (TextView) listViewItem.findViewById(R.id.textViewRank);
+        TextView textViewRank = (TextView) listViewItem.findViewById(R.id.textViewRank);
 
-        User user = users.get(position);
-        textViewName.setText(user.getUserName());
-        textViewRating.setText(String.valueOf(user.getRating()));
+        Access access = accesses.get(position);
+        textViewName.setText(access.getAccessName());
+        textViewRank.setText(access.getAccessRank());
 
         return listViewItem;
     }

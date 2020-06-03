@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="costas.firebasedb.MainActivity">
+
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Name"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="42dp" />
+        android:hint="Enter name" />
 
     <Spinner
         android:id="@+id/spinnerRanks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/ranks"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="175dp" />
+        android:layout_below="@id/editTextName"
+        android:entries="@array/ranks"></Spinner>
 
     <Button
-        android:id="@+id/buttonAddUser"
+        android:id="@+id/buttonAddAccess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add User"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="302dp" />
+        android:layout_below="@id/spinnerRanks"
+        android:text="Add" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddAccess"
+        android:text="Accesses"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
 
     <ListView
-        android:id="@+id/listViewUsers"
+        android:id="@+id/listViewAccesses"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"></ListView>
+
+</RelativeLayout>
