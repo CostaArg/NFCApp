@@ -55,10 +55,9 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
 //        Time time = new Time();
 //        time.setToNow();
         String pkiKey = getData();
-        String text = pkiKey;
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMimeRecord(
-                        "application/costas.firebasedb.beam", text.getBytes())
+                        "application/costas.firebasedb.beam", pkiKey.getBytes())
                 });
         return msg;
     }
@@ -83,13 +82,9 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_SENT:
+                    String pkiKey = msg.toString();
                     Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
-
-                    SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
-
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("pkiInput", msg.toString());
-                    editor.apply();
+                    handlePki(pkiKey);
 
                     break;
             }
@@ -105,6 +100,17 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
         }
     }
 
+    public void handlePki(String pki) {
+        SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("pkiInput", pki);
+        editor.apply();
+        Intent intent = new Intent(NFCActivity.this, PKIActivity.class);
+        intent.putExtra("key", pki);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onNewIntent(Intent intent) {
         // onResume gets called after this to handle the intent
@@ -117,10 +123,19 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
     void processIntent(Intent intent) {
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
-        // only one message sent during the beam
-        NdefMessage msg = (NdefMessage) rawMsgs[0];
-        // record 0 contains the MIME type, record 1 is the AAR, if present
-        mInfoText.setText(new String(msg.getRecords()[0].getPayload()));
+        NdefMessage[] msgs = null;
+        if (rawMsgs != null) {
+            // getting the first message
+            NdefMessage msg = (NdefMessage) rawMsgs[0];
+            try {
+                String pkiKey = new String(msg.getRecords()[0].getPayload(), "UTF-8");
+                handlePki(pkiKey);
+
+            } catch (java.io.UnsupportedEncodingException e){
+                Toast.makeText(getApplicationContext(), "Failed encoding NDEF", Toast.LENGTH_LONG).show();
+            }
+        }
+        // ?? toast ??
     }
 
 

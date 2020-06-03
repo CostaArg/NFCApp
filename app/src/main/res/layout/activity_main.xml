@@ -48,10 +48,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="60dp"
         android:layout_marginEnd="20dp"
-        android:text="go to pki" />
+        android:layout_marginRight="20dp"
+        android:text="GO TO PKI" />
 
     <Button
         android:id="@+id/gotoNFC"
@@ -59,9 +61,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|start"
         android:layout_marginBottom="60dp"
         android:layout_marginStart="20dp"
-        android:text="go to nfc" />
+        android:layout_marginLeft="20dp"
+        android:text="GO TO NFC" />
 
 </RelativeLayout>

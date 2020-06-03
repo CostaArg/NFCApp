@@ -93,34 +93,36 @@ public class PKIActivity extends AppCompatActivity {
             }
         });
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String key = bundle.getString("key");
+            if (key != null) {
+                authUser(key);
+            }
+        }
+
     }
 
     private void showPkiToast(String pkiKey) {
         Toast.makeText(PKIActivity.this, pkiKey, Toast.LENGTH_SHORT).show();
     }
 
-    private void authUser(final String pkiKey) {
-
+    public void authUser(final String pkiKey) {
         final Context c = this;
 
-        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+        readData(databaseUsers, new DBManager() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String userFound;
-
-                userFound = "reset";
-
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                boolean userFound = false;
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     String pkiDb = String.valueOf(userSnapshot.child("userName").getValue());
-
                     if (pkiDb.compareTo(pkiKey) == 0) {
-                        userFound = "yes";
+                        userFound = true;
+                        break;
                     }
-
                 }
 
-                if (userFound.equals("yes")) {
+                if (userFound) {
                     Toast.makeText(c, "User found", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(c, "User not found", Toast.LENGTH_LONG).show();
@@ -129,9 +131,31 @@ public class PKIActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onStart() {
+                //whatever you need to do onStart
+                return;
+            }
+
+            @Override
+            public void onFailure() {
+                return;
+            }
         });
     }
 
+    public void readData(DatabaseReference ref, final DBManager listener) {
+        listener.onStart();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure();
+            }
+        });
+
+    }
 }
