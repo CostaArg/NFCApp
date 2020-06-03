@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">firebasedb</string>
+    <string name="app_name">Identification App</string>
     
     <array name="ranks">
         <item>Student</item>
@@ -7,9 +7,10 @@
         <item>Cleaner</item>
     </array>
 
-    <string name="currentPki">Current public key is:</string>
+    <string name="currentPki">Current key is:</string>
 
     <string name="info">Make sure that Android Beam is enabled in the settings, then place your device up
         against another Android device that supports Android Beam to send your public key</string>
+
     <string name="menu_settings">Android Beam settings</string>
 </resources>
