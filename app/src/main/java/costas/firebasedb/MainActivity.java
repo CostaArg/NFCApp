@@ -159,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
         //getting the specified access reference
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
-        //removing access
+        //removing user
         dR.removeValue();
 
-        //getting the users reference for the specified access
+        //getting the db reference for the specified user
         DatabaseReference drUsers = FirebaseDatabase.getInstance().getReference("users").child(id);
 
         //removing all users
