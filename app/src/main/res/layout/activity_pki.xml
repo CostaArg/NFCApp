@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pki"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="costas.firebasedb.PKIActivity">
 
     <EditText
         android:id="@+id/pkiInput"
@@ -9,27 +13,34 @@
         android:layout_height="wrap_content"
         android:hint="Enter Public Key" />
 
-    <Button
-        android:id="@+id/pkiSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pkiInput"
-        android:text="Submit" />
-
     <TextView
         android:id="@+id/pkiDisplay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/pkiSubmit"
+        android:layout_below="@id/buttonsLayout"
         android:text="@string/currentPki"/>
 
-    <Button
-        android:id="@+id/pkiAuthenticate"
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pkiDisplay"
-        android:text="Authenticate" />
+        android:orientation="horizontal"
+        android:layout_below="@+id/pkiInput">
 
+        <Button
+            android:id="@+id/pkiSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit" />
 
+        <Button
+            android:id="@+id/pkiAuthenticate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Authenticate" />
+
+    </LinearLayout>
 
 </RelativeLayout>
