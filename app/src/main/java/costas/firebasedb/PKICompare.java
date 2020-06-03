@@ -1,22 +1,37 @@
 //package costas.firebasedb;
 //
-//import com.google.firebase.database.DataSnapshot;
+//public class PKICompare{
 //
-//public class PKICompare {
+//        DatabaseReference databaseUsers;
 //
-//    public static void main(String args[], DataSnapshot, dataSnapshot, pki) {
-//        String submittedPki = pki; //this is the value that the user enters in pkiInput
-//        String pkiDb = //get user id from database
+//        ListView listViewUsers;
 //
-//        //search array for same value
+//        List<User> userList;
 //
-//        if(submittedPki.compareTo(pkiDb)==0) {
-//            System.out.println("PKI Input and PKI db are the same");
-//            //then return value pass
-//        }else
-//        {
-//            System.out.println("PKI Input and PKI db are not the same");
-//            //then return value nopass
+//@Override
+//protected void onStart(){
+//        super.onStart();
+//
+//        databaseUsers.addValueEventListener(new ValueEventListener(){
+//@Override
+//public void onDataChange(DataSnapshot dataSnapshot){
+//
+//        userList.clear();
+//
+//        for(DataSnapshot userSnapshot:dataSnapshot.getChildren()){
+//        User user=userSnapshot.getValue(User.class);
+//
+//        userList.add(user);
 //        }
-//    }
-//}
+//
+//        UserList adapter=new UserList(MainActivity.this,userList);
+//        listViewUsers.setAdapter(adapter);
+//        }
+//
+//@Override
+//public void onCancelled(DatabaseError databaseError){
+//
+//        }
+//        });
+//        }
+//        }
