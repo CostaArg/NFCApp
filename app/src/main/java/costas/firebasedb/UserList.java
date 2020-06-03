@@ -11,28 +11,31 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class UserList extends ArrayAdapter<User> {
-    private Activity context;
-    List<User> users;
+public class UserList extends ArrayAdapter<User>{
 
-    public UserList(Activity context, List<User> users) {
-        super(context, R.layout.layout_access_list, users);
+    private Activity context;
+    private List<User> userList;
+
+    public  UserList(Activity context, List<User> userList){
+        super(context, R.layout.list_layout, userList);
         this.context = context;
-        this.users = users;
+        this.userList = userList;
     }
 
-
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.layout_access_list, null, true);
+
+        View listViewItem = inflater.inflate(R.layout.list_layout, null, true);
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
-        TextView textViewRating = (TextView) listViewItem.findViewById(R.id.textViewRank);
+        TextView textViewRank = (TextView) listViewItem.findViewById(R.id.textViewRank);
 
-        User user = users.get(position);
+        User user = userList.get(position);
+
         textViewName.setText(user.getUserName());
-        textViewRating.setText(String.valueOf(user.getRating()));
+        textViewRank.setText(user.getUserRank());
 
         return listViewItem;
     }

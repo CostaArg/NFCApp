@@ -21,7 +21,7 @@
         android:entries="@array/ranks"></Spinner>
 
     <Button
-        android:id="@+id/buttonAddAccess"
+        android:id="@+id/buttonAddUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerRanks"
@@ -31,26 +31,16 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonAddAccess"
-        android:text="Accesses"
+        android:layout_below="@id/buttonAddUser"
+        android:text="Users"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
 
     <ListView
-        android:id="@+id/listViewAccesses"
+        android:id="@+id/listViewUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"></ListView>
-
-    <Button
-        android:id="@+id/gotoPKI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="17dp"
-        android:text="go to pki" />
 
 </RelativeLayout>
