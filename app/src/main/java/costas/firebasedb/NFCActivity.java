@@ -52,10 +52,10 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
 
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
-        Time time = new Time();
-        time.setToNow();
+//        Time time = new Time();
+//        time.setToNow();
         String pkiKey = getData();
-        String text = (pkiKey + time.format("%H:%M:%S"));
+        String text = pkiKey;
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { createMimeRecord(
                         "application/costas.firebasedb.beam", text.getBytes())
@@ -84,6 +84,13 @@ public class NFCActivity extends AppCompatActivity implements CreateNdefMessageC
             switch (msg.what) {
                 case MESSAGE_SENT:
                     Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
+
+                    SharedPreferences sharedPref = getSharedPreferences("pkiKey", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("pkiInput", msg.toString());
+                    editor.apply();
+
                     break;
             }
         }
